@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>关联浏览器指纹的昵称</h1>
+    <p>浏览器指纹:{{fp}}</p>
+    <p>十六位md5: {{md5}}</p>
+    <p>随机昵称:{{nickname}}</p>
+    <p>unicode昵称(设备不一定支持): {{nickname2}}</p>
+  </div>
+  <script src="./js/md5.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.14/vue.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js"></script>
+  <script src="./js/name.js"></script>
+  <script>
+    let v = new Vue({
+      el: '#app',
+      data() {
+        return {
+          fp: '',
+          md5: '',
+          nickname: '',
+          nickname2: ''
+        }
+      },
+      created() {
+        this.setName1()
+        this.setName2()
+      },
+      methods:{
+        setName1(){
+          // 方法1: 取姓名库
+          const fpPromise = FingerprintJS.load()
+          fpPromise.then(fp => fp.get()).then(result => {
+            const visitorId = result.visitorId
+            this.fp = visitorId
+            this.md5 = this.fp.MD5()
+            let strMd5 = this.md5
+
+            let str9 = '' + (+('0x' + strMd5).toString(10).slice(0, 9))
+            console.log('10进制md5值的前9位:', str9);
+            let randomName = ''
+            let normalArr = this.filterArr(str9, 3)
+            for (let index = 0; index < normalArr.length; index++) {
+              const idx = normalArr[index];
+              const boyOrGirl = str9.charAt(str9.length - 1) > 4 ? 0 : 1
+              randomName += !index ? XING[+idx] : MING[boyOrGirl][+idx]
+            }
+
+            this.nickname = randomName
+          })
+        },
+        setName2() {
+          // 方法2: 直接转换成unicode (没啥用)
+          const fpPromise = FingerprintJS.load()
+          fpPromise.then(fp => fp.get()).then(result => {
+            const visitorId = result.visitorId
+            this.fp = visitorId
+            console.log('浏览器指纹:', this.fp);
+
+            this.md5 = this.fp.MD5()
+            let strMd5 = this.md5
+
+            let uniArr = this.filterArr(strMd5, 4, true)
+            let raw = uniArr.join('');
+            let uniName = eval("'" + raw + "'");
+            console.log('原始md5值直接转换unicode:', uniName);
+            this.nickname2 = uniName
+          })
+        },
+        filterArr(str,n, bool){
+          let arr = []
+          for (let index = 0; index < str.length / n; index++) {
+            let one = str.slice(n * index, n * (index + 1))
+            one.slice(0)
+            if (bool) {
+              let fixStr = '\\u' + one;
+              arr.push(fixStr)
+            }else{
+              arr.push(one)
+            }
+          }
+          return arr
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
