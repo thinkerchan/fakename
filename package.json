@@ -1,6 +1,6 @@
 {
   "name": "fakenamejs",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Generate Chinese fakename based on browser fingerprints",
   "main": "dist/fakename.min.js",
   "scripts": {

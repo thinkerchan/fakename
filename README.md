@@ -12,7 +12,7 @@ npm install fakenamejs
 ### Browser
 
 ```html
-<script src="https://unpkg.com/fakenamejs@1.0.0/dist/fakename.min.js"></script>
+<script src="https://unpkg.com/fakenamejs@1.1.0/dist/fakename.min.js"></script>
 ```
 
 ## Usage
