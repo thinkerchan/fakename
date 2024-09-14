@@ -1,0 +1,24 @@
+{
+  "name": "fakenamejs",
+  "version": "1.0.0",
+  "description": "Generate Chinese fakename based on browser fingerprints",
+  "main": "dist/fakename.min.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development --watch"
+  },
+  "keywords": ["fakename", "nickname", "generator", "fingerprint"],
+  "author": "thinkerchan",
+  "license": "MIT",
+  "dependencies": {
+    "@fingerprintjs/fingerprintjs": "^3.3.0",
+    "md5": "^2.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.50.0",
+    "webpack-cli": "^4.8.0"
+  }
+}
