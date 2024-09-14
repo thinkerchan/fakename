@@ -1,56 +1,35 @@
-# Chinese Nickname Generator
+# Chinese Fakename
 
 Generate unique Chinese nicknames based on browser fingerprints.
 
 ## Installation
 
 ### NPM
-
 ```bash
-npm install chinese-nickname-generator
+npm install fakenamejs
 ```
 
 ### Browser
 
 ```html
-<script src="https://unpkg.com/chinese-nickname-generator@1.0.0/dist/chinese-nickname-generator.min.js"></script>
+<script src="https://unpkg.com/fakenamejs@1.0.0/dist/fakename.min.js"></script>
 ```
 
 ## Usage
 
-### In Node.js
 
-```javascript
-const ChineseNicknameGenerator = require('chinese-nickname-generator');
+```js
 
-const generator = new ChineseNicknameGenerator();
+  const generator = new Fakename()
+  generator.generate({
+    // gender:0 // 0 female, 1 male ,optional
+  }).then(({ nickname, gender, visitorId }) => {
+    this.fp = visitorId
+    this.nickname = nickname
+    this.gender = gender
+  })
 
-generator.generateNickname().then(({ fullName, gender }) => {
-  console.log(`Generated nickname: ${fullName} (${gender})`);
-});
 ```
-
-### In Browser
-
-```html
-<script src="https://unpkg.com/chinese-nickname-generator@1.0.0/dist/chinese-nickname-generator.min.js"></script>
-<script>
-  const generator = new ChineseNicknameGenerator();
-
-  generator.generateNickname().then(({ fullName, gender }) => {
-    console.log(`Generated nickname: ${fullName} (${gender})`);
-  });
-</script>
-```
-
-## API
-
-### generateNickname()
-
-Returns a Promise that resolves to an object containing:
-
-- `fullName`: The generated Chinese nickname
-- `gender`: The gender associated with the nickname ('男' for male, '女' for female)
 
 ## License
 
